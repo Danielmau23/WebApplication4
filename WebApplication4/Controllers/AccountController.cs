@@ -13,11 +13,16 @@ using WebApplication4.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
+using WebApplication4.Models;
+
 namespace WebApplication4.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+
+        BaseDatos tabla = new BaseDatos();
+
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
@@ -54,6 +59,7 @@ namespace WebApplication4.Controllers
                     if (user != null)
                     {
                         await SignInAsync(user, model.RememberMe);
+                        Session["idUsuario"] = tabla.idUsuario(model.UserName, model.Password);
                         return RedirectToLocal(returnUrl);
                     }
                     else
@@ -93,7 +99,7 @@ namespace WebApplication4.Controllers
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Plantilla");
                     }
                     else
                     {
@@ -304,7 +310,7 @@ namespace WebApplication4.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -386,7 +392,7 @@ namespace WebApplication4.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Plantilla");
             }
         }
 

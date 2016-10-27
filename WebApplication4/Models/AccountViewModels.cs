@@ -35,7 +35,7 @@ namespace WebApplication4.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Nombre de usuario")]
+        [Display(Name = "Nombre")]
         public string UserName { get; set; }
 
         [Required]

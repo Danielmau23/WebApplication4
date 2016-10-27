@@ -1,0 +1,35 @@
+﻿@model WebApplication4.Models.plantillas
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>plantillas</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.mensaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mensaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.html)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.html)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idPlantilla }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebApplication4.Models.plantillas>
+
+@{
+    ViewBag.Title = "Plantillas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Plantillas</h2>
+
+<p>
+    <h4> @Html.ActionLink("Nueva Plantilla", "Create") </h4>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.mensaje)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.mensaje)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idPlantilla }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.idPlantilla }) |
+            @Html.ActionLink("Enviar", "Details", new { id=item.idPlantilla }) 
+            
+        </td>
+    </tr>
+}
+
+</table>

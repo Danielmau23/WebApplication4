@@ -10,12 +10,21 @@ namespace WebApplication4
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+
+        int identificador = -10;
+        protected void Application_Start(object sender, EventArgs e) { }
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            Session["idUsuario"] = identificador;
+        } 
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
         }
     }
 }
