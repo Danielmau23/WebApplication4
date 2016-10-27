@@ -53,20 +53,28 @@ namespace WebApplication4.Controllers
         {
             if (IsValidEmail(model.correo))
             {
-                if (ModelState.IsValid)
+                if (tabla.login(model.UserName, model.Password, model.correo))
                 {
-                    var user = await UserManager.FindAsync(model.UserName, model.Password);
-                    if (user != null)
+                    if (ModelState.IsValid)
                     {
-                        await SignInAsync(user, model.RememberMe);
-                        Session["idUsuario"] = tabla.idUsuario(model.UserName, model.Password);
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Nombre de Usuario o contraseña invalida.");
+                        var user = await UserManager.FindAsync(model.UserName, model.Password);
+                        if (user != null)
+                        {
+                            await SignInAsync(user, model.RememberMe);
+                            Session["idUsuario"] = tabla.idUsuario(model.UserName, model.Password);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Nombre de Usuario o contraseña invalida.");
+                        }
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Credenciales incorrectos.");
+                }
+
             }
             else
                 ModelState.AddModelError("", "El Correo electronico no es valido.");
@@ -98,8 +106,18 @@ namespace WebApplication4.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index", "Plantilla");
+                        if (tabla.register(model.UserName,model.correo, model.Password))
+                        {
+                            await SignInAsync(user, isPersistent: false);
+                            Session["idUsuario"] = tabla.idUsuario(model.UserName, model.Password);
+                            return RedirectToAction("Index", "Plantilla");
+                        }
+                        else
+                        {
+                            AuthenticationManager.SignOut();
+                            Session["idUsuario"] = -10;
+                            ModelState.AddModelError("", "Error al crear la cuenta");
+                        }
                     }
                     else
                     {
@@ -165,7 +183,14 @@ namespace WebApplication4.Controllers
                     IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        if (tabla.newPass(User.Identity.Name, model.NewPassword))
+                            return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        else
+                        {
+                            result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.NewPassword, model.OldPassword);
+                            ModelState.AddModelError("", "Ocurrio un error a la hora de actualizar.");
+                        }
+
                     }
                     else
                     {

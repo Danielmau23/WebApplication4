@@ -148,3 +148,4 @@ C:\Users\Daniel\Documents\Daniel\TEC\Práctica (nwn)\DotCreek\WebApplication4\We
 C:\Users\Daniel\Documents\Daniel\TEC\Práctica (nwn)\DotCreek\WebApplication4\WebApplication4\obj\Debug\WebApplication4.dll
 C:\Users\Daniel\Documents\Daniel\TEC\Práctica (nwn)\DotCreek\WebApplication4\WebApplication4\obj\Debug\WebApplication4.pdb
 C:\Users\Daniel\Documents\Daniel\TEC\Práctica (nwn)\DotCreek\WebApplication4\WebApplication4\obj\Debug\WebApplication4.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Daniel\TEC\Práctica (nwn)\DotCreek\WebApplication4\WebApplication4\bin\GoEmail.dll
